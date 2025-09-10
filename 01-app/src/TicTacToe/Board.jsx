@@ -27,6 +27,7 @@ const Board = () => {
   };
 
   const isWinner = checkWinner();
+  const isDraw = !isWinner && state.every((square) => square !== null);
 
   const handleClick = (index) => {
     const copystate = [...state];
@@ -37,6 +38,7 @@ const Board = () => {
 
   const handleReset = () => {
     setState(Array(9).fill(null));
+    // setIsXTurn(true);
   };
 
   return (
@@ -51,8 +53,26 @@ const Board = () => {
             Play Again
           </button>
         </>
+      ) : isDraw ? (
+        <>
+          <div className="flex flex-col items-center">
+            <h2 className="text-2xl font-bold mb-4">Game Draw 🤝</h2>
+            <button
+              className="bg-gray-200 px-3 py-1.5 rounded-xl cursor-pointer hover:bg-gray-300 items-center"
+              onClick={handleReset}
+            >
+              Play Again
+            </button>
+          </div>
+        </>
       ) : (
         <>
+          <h1 className="font-bold  text-2xl text-center mb-10">
+            Start the Game
+          </h1>
+          <h2 className="font-bold text-gray-500 text-center text-xl mb-2">
+            Player {isXTurn ? "X" : "0"}'s Turn
+          </h2>
           <div className="flex justify-evenly items-center">
             <Sqare onClick={() => handleClick(0)} value={state[0]} />
             <Sqare onClick={() => handleClick(1)} value={state[1]} />
